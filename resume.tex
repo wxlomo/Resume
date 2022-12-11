@@ -1,0 +1,588 @@
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+%	The MIT License (MIT)
+%
+%	Copyright (c) 2021 Philip Empl
+%
+%	Permission is hereby granted, free of charge, to any person obtaining a copy
+%	of this software and associated documentation files (the "Software"), to deal
+%	in the Software without restriction, including without limitation the rights
+%	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+%	copies of the Software, and to permit persons to whom the Software is
+%	furnished to do so, subject to the following conditions:
+%	
+%	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+%	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+%	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+%	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+%	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+%	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+%	THE SOFTWARE.
+%	
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+
+
+%============================================================================%
+%
+%	DOCUMENT DEFINITION
+%
+%============================================================================%
+
+\documentclass[letterpaper,10pt,english]{article}
+
+
+%----------------------------------------------------------------------------------------
+%	ENCODING
+%----------------------------------------------------------------------------------------
+
+% we use utf8 since we want to build from any machine
+\usepackage[utf8]{inputenc}		
+\usepackage[USenglish]{isodate}
+\usepackage{fancyhdr}
+\usepackage[numbers]{natbib}
+
+%----------------------------------------------------------------------------------------
+%	LOGIC
+%----------------------------------------------------------------------------------------
+
+% provides \isempty test
+\usepackage{xstring, xifthen}
+\usepackage{enumitem}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage{lipsum}
+\usepackage{pdfpages}
+\usepackage{changepage}
+
+%----------------------------------------------------------------------------------------
+%	FONT BASICS
+%----------------------------------------------------------------------------------------
+
+% some tex-live fonts - choose your own
+
+%\usepackage[defaultsans]{droidsans}
+%\usepackage[default]{comfortaa}
+%\usepackage{cmbright}
+\usepackage[default]{raleway}
+%\usepackage{fetamont}
+%\usepackage[default]{gillius}
+%\usepackage[light,math]{iwona}
+%\usepackage[thin]{roboto} 
+
+% set font default
+\renewcommand*\familydefault{\sfdefault}
+\usepackage[T1]{fontenc}
+
+% more font size definitions
+\usepackage{moresize}
+
+%----------------------------------------------------------------------------------------
+%	FONT AWESOME ICONS
+%---------------------------------------------------------------------------------------- 
+
+% include the fontawesome icon set
+\usepackage{fontawesome}
+
+% use to vertically center content
+% credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
+\newcommand{\vcenteredinclude}[1]{\begingroup
+	\setbox0=\hbox{\includegraphics{#1}}%
+	\parbox{\wd0}{\box0}\endgroup}
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
+% use to vertically center content
+% credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
+\newcommand*{\vcenteredhbox}[1]{\begingroup
+	\setbox0=\hbox{#1}\parbox{\wd0}{\box0}\endgroup}
+
+% icon shortcut
+\newcommand{\icon}[3] { 							
+	\makebox(#2, #2){\textcolor{maincol}{\csname fa#1\endcsname}}
+}	
+
+
+% icon with text shortcut
+\newcommand{\icontext}[4]{ 						
+	\vcenteredhbox{\icon{#1}{#2}{#3}}  \hspace{2pt}  \parbox{0.9\mpwidth}{\textcolor{#4}{#3}}
+}
+
+% icon with website url
+\newcommand{\iconhref}[5]{ 						
+	\vcenteredhbox{\icon{#1}{#2}{#5}}  \hspace{2pt} \href{#4}{\textcolor{#5}{#3}}
+}
+
+% icon with email link
+\newcommand{\iconemail}[5]{ 						
+	\vcenteredhbox{\icon{#1}{#2}{#5}}  \hspace{2pt} \href{mailto:#4}{\textcolor{#5}{#3}}
+}
+
+%----------------------------------------------------------------------------------------
+%	PAGE LAYOUT  DEFINITIONS
+%----------------------------------------------------------------------------------------
+
+% page outer frames (debug-only)
+% \usepackage{showframe}		
+
+% we use paracol to display breakable two columns
+\usepackage{paracol}
+\usepackage{tikzpagenodes}
+\usetikzlibrary{calc}
+%\usepackage{lmodern}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{atbegshi}
+% define page styles using geometry
+\usepackage[letterpaper]{geometry}
+
+% remove all possible margins
+\geometry{top=0.5in, bottom=0.5in, left=0.5in, right=0.5in}
+
+\usepackage{fancyhdr}
+\pagestyle{empty}
+
+% space between header and content
+% \setlength{\headheight}{0pt}
+
+% indentation is zero
+\setlength{\parindent}{0mm}
+
+%----------------------------------------------------------------------------------------
+%	TABLE /ARRAY DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+% extended aligning of tabular cells
+\usepackage{array}
+
+% custom column right-align with fixed width
+% use like p{size} but via x{size}
+\newcolumntype{x}[1]{%
+	>{\raggedleft\hspace{0pt}}p{#1}}%
+
+
+%----------------------------------------------------------------------------------------
+%	GRAPHICS DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+%for header image
+\usepackage{graphicx}
+
+% use this for floating figures
+% \usepackage{wrapfig}
+% \usepackage{float}
+% \floatstyle{boxed} 
+% \restylefloat{figure}
+
+%for drawing graphics		
+\usepackage{tikz}			
+\usepackage{ragged2e}	
+\usetikzlibrary{shapes, backgrounds,mindmap, trees}
+
+%----------------------------------------------------------------------------------------
+%	Color DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+\usepackage{transparent}
+\usepackage{color}
+
+% primary color
+\definecolor{maincol}{RGB}{ 0,0,0}
+
+% accent color, secondary
+% \definecolor{accentcol}{RGB}{ 250, 150, 10 }
+
+% dark color
+\definecolor{darkcol}{RGB}{ 0, 0, 0 }
+
+% light color
+\definecolor{lightcol}{RGB}{245,245,245}
+
+\definecolor{accentcol}{RGB}{0,0,0}
+
+
+
+% Package for links, must be the last package used
+\usepackage[hidelinks]{hyperref}
+			
+
+% returns minipage width minus two times \fboxsep
+% to keep padding included in width calculations
+% can also be used for other boxes / environments
+\newcommand{\mpwidth}{\linewidth-\fboxsep-\fboxsep}
+
+
+
+%============================================================================%
+%
+%	CV COMMANDS
+%
+%============================================================================%
+
+%----------------------------------------------------------------------------------------
+%	 CV LIST
+%----------------------------------------------------------------------------------------
+
+% renders a standard latex list but abstracts away the environment definition (begin/end)
+
+
+\newcommand{\cvlist}[1] {
+	\begin{itemize}[left=5pt,nosep]{#1}\end{itemize}
+}
+
+%----------------------------------------------------------------------------------------
+%	 CV TEXT
+%----------------------------------------------------------------------------------------
+
+% base class to wrap any text based stuff here. Renders like a paragraph.
+% Allows complex commands to be passed, too.
+% param 1: *any
+\newcommand{\cvtext}[1] {
+	\begin{tabular*}{1\mpwidth}{p{0.98\mpwidth}}
+		\parbox{1\mpwidth}{#1}
+	\end{tabular*}
+}
+\newcommand{\cvtextsmall}[1] {
+	\begin{tabular*}{0.8\mpwidth}{p{0.8\mpwidth}}
+		\parbox{0.8\mpwidth}{#1}
+	\end{tabular*}
+}
+\newcommand{\cvtextboldl}[1] {
+	\begin{tabular*}{0.8\mpwidth}{p{0.8\mpwidth}}
+		\parbox{0.8\mpwidth}{\u#1}
+	\end{tabular*}
+}
+%----------------------------------------------------------------------------------------
+%	CV SECTION
+%----------------------------------------------------------------------------------------
+
+% Renders a a CV section headline with a nice underline in main color.
+% param 1: section title
+\newcommand{\cvsection}[1] {
+	\vspace{14pt}
+	\cvtext{
+		\textbf{\Large{\textcolor{darkcol}{\uppercase{#1}}}}\\[-4pt]
+		\textcolor{accentcol}{ \rule{0.05\textwidth}{2pt} } \\
+	}
+}
+
+\newcommand{\cvsectionsmall}[1] {
+	\vspace{14pt}
+	\cvtext{
+		\textbf{\Large{\textcolor{darkcol}{#1}}}\\[-4pt]
+		\textcolor{accentcol}{ \rule{0.2\textwidth}{1.5pt} } \\
+	}
+}
+
+\newcommand{\cvheadline}[1] {
+	\vspace{16pt}
+	\cvtext{
+		\textbf{\Huge{\textcolor{accentcol}{#1}}}\\[-4pt]
+		
+	}
+}
+
+\newcommand{\cvsubheadline}[1] {
+	\vspace{8pt}
+	\cvtext{
+		\textbf{\textcolor{darkcol}{\uppercase{#1}}}\\[-8pt]
+		
+	}
+}
+%----------------------------------------------------------------------------------------
+%	META SKILL
+%----------------------------------------------------------------------------------------
+
+% Renders a progress-bar to indicate a certain skill in percent.
+% param 1: name of the skill / tech / etc.
+% param 2: level (for example in years)
+% param 3: percent, values range from 0 to 1
+\newcommand{\cvskill}[3] {
+
+
+	\vspace{8pt}
+	\begin{tabular*}{1\mpwidth}{p{1\mpwidth}  r}
+		\textcolor{black}{\textbf{#1}} \\ \textcolor{maincol}{#2}\\[-4pt]
+	\end{tabular*}%
+}
+
+
+%----------------------------------------------------------------------------------------
+%	 CV EVENT
+%----------------------------------------------------------------------------------------
+
+% Renders a table and a paragraph (cvtext) wrapped in a parbox (to ensure minimum content
+% is glued together when a pagebreak appears).
+% Additional Information can be passed in text or list form (or other environments).
+% the work you did
+% param 1: time-frame i.e. Sep 14 - Jan 15 etc.
+% param 2:	 event name (job position etc.)
+% param 3: Customer, Employer, Industry
+% param 4: Short description
+% param 5: work done (optional)
+% param 6: technologies include (optional)
+% param 7: achievements (optional)
+\newcommand{\cvevent}[7] {
+	
+	% we wrap this part in a parbox, so title and description are not separated on a pagebreak
+	% if you need more control on page breaks, remove the parbox
+	\parbox{\mpwidth}{
+		\begin{tabular*}{1\mpwidth}{p{1\mpwidth}  r}
+			\textcolor{black}{\textbf{#2}} \hfill \small\textbf{#1} \\ 
+			\textcolor{black}{\textbf{#3}} \hfill \small\textbf{#5} \\
+		\end{tabular*}\\[-4pt]
+		
+		\ifthenelse{\isempty{#4}}{}{
+			\cvtext{#4}\\
+		}
+	}
+	\vspace{14pt}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	 CV META EVENT
+%----------------------------------------------------------------------------------------
+
+% Renders a CV event on the sidebar
+% param 1: title
+% param 2: subtitle (optional)
+% param 3: customer, employer, etc,. (optional)
+% param 4: info text (optional)
+\newcommand{\cvmetaevent}[4] {
+	\textcolor{maincol} { \cvtext{\textbf{\begin{flushleft}#1\end{flushleft}}\begin{flushright}#3\end{flushright}}}
+	
+	\ifthenelse{\isempty{#2}}{}{
+		\textcolor{black} {\cvtext{\textbf{#2}} }
+	}
+	
+	\cvtext{#4}\\[14pt]
+}
+
+%---------------------------------------------------------------------------------------
+%	QR CODE
+%----------------------------------------------------------------------------------------
+
+% Renders a qrcode image (centered, relative to the parentwidth)
+% param 1: percent width, from 0 to 1
+\newcommand{\cvqrcode}[1] {
+	\begin{center}
+		\includegraphics[width={#1}\mpwidth]{qrcode}
+	\end{center}
+}
+
+
+% HEADER AND FOOOTER 
+%====================================
+\newcommand\Header[1]{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\fill[accentcol]
+		(current page.north west) -- (current page.north east) --
+		([yshift=50pt]current page.north east|-current page text area.north east) --
+		([yshift=50pt,xshift=-3cm]current page.north|-current page text area.north) --
+		([yshift=10pt,xshift=-5cm]current page.north|-current page text area.north) --
+		([yshift=10pt]current page.north west|-current page text area.north west) -- cycle;
+		\node[font=\sffamily\bfseries\color{white},anchor=west,
+		xshift=0.7cm,yshift=-0.32cm] at (current page.north west)
+		{\fontsize{12}{12}\selectfont {#1}};
+	\end{tikzpicture}%
+}
+
+\newcommand\Footer[1]{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\fill[lightcol]
+		(current page.south east) -- (current page.south west) --
+		([yshift=-80pt]current page.south east|-current page text area.south east) --
+		([yshift=-80pt,xshift=-6cm]current page.south|-current page text area.south) --
+		([xshift=-2.5cm,yshift=-10pt]current page.south|-current page text area.south) --	
+		([yshift=-10pt]current page.south east|-current page text area.south east) -- cycle;
+		\node[yshift=0.32cm,xshift=9cm] at (current page.south) {\fontsize{10}{10}\selectfont \textbf{\thepage}};
+	\end{tikzpicture}%
+}
+
+
+%=====================================
+%============================================================================%
+%
+%
+%
+%	DOCUMENT CONTENT
+%
+%
+%
+%============================================================================%
+\begin{document}
+	
+	\columnratio{0.31}
+	\setlength{\columnsep}{2.2em}
+	\setlength{\columnseprule}{4pt}
+	\colseprulecolor{white}
+	
+	
+	% LEBENSLAUF HIERE
+	%\AtBeginShipoutFirst{\Header{CV}\Footer{1}}
+	%\AtBeginShipout{\AtBeginShipoutAddToBox{\Header{CV}\Footer{2}}}
+	
+	%\newpage
+	
+	\colseprulecolor{lightcol}
+	\columnratio{0.69}
+	\setlength{\columnsep}{2.2em}
+	\setlength{\columnseprule}{2pt}
+	
+	\fcolorbox{white}{white}{\begin{minipage}[c][1.325cm][c]{1\mpwidth}
+			\fontsize{36}{36}{\textbf{\textcolor{maincol}{\uppercase{Weixuan Yang}}}} \\[2pt]
+			\normalsize{ \textcolor{maincol} {Master student in Computer Engineering}}
+	\end{minipage}} 
+	
+	\hspace{12cm}
+	
+	\textcolor{lightcol}{\rule{1\textwidth}{2pt}}
+	
+	\begin{paracol}{2}
+		\begin{leftcolumn}
+			\cvsection{Education}
+			
+			\cvevent
+			{Sep 2021 - Present}
+			{Master of Engineering in Computer Engineering}
+			{University of Toronto}
+			{CGPA: 4.00}
+			{Toronto, ON, Canada}
+			\vfill\null\vspace{-8pt}
+			
+			\cvevent
+			{Sep 2016 - Apr 2021}
+			{Bachelor of Engineering in Electrical Engineering}
+			{Dalhousie University}
+			{CGPA: 3.86, Sexton Distinction, Sexton Scholar}
+			{Halifax, NS, Canada}
+			\vfill\null\vspace{-12pt}
+			
+			\cvsection{PROFESSIONAL EXPERIENCE}
+			
+			\cvevent
+			{Sep 2019 --- Mar 2020}
+			{Reliability Co-op Electrical Engineering Student}
+			{Michelin North America Inc.}
+			{Automation design, Electrical design, PLC programming}
+			{Bridgewater, NS, Canada}
+			\vfill\null\vspace{-8pt}
+			
+			\cvevent
+			{Jan 2019 --- Apr 2019}
+			{Co-op Embedded System Designer}
+			{KingStar Geophysical Prospect Equipment Ltd.}
+			{Embedded system programming, Mixed-signal PCB design, GUI design}
+			{Baoding, Hebei, China}
+			\vfill\null\vspace{-8pt}
+			
+			\textcolor{lightcol}{\rule{1\textwidth}{2pt}}
+		\end{leftcolumn}
+		\begin{rightcolumn}
+			\vspace{8pt}
+			
+			\cvsubheadline{Email}
+			
+			\cvtext{\href{mailto:weixuan.yang@mail.utoronto.ca}{weixuan.yang@mail.utoronto.ca}}
+			
+			\cvsubheadline{Phone}
+			
+			\cvtext{(902) 999-7773}
+			
+			\cvsubheadline{Address}
+			
+			\vspace{2pt}
+			
+			\cvtext{1404-195 Redpath Ave, \\ Toronto, ON, M4P 0E4, Canada}
+			
+			\vspace{8pt}
+			\cvtext{
+				\href{https://www.linkedin.com/in/weixuanyang/}{\textbf{\textcolor{blue}{Linkedin}}}~ | ~\href{https://github.com/wxlomo/}{\textbf{\textcolor{blue}{GitHub}}}		
+			}
+			
+			\vspace{8pt}
+			
+			\cvsection{Skills}
+			
+			\vspace{-7pt}
+			
+			\cvskill{\textbf{C / C++}}{(STL, pthreads, Boost)} \\
+			
+			\cvskill{\textbf{JavaScript / HTML / CSS}} {(Node, React, jQuery, Bootstrap)} \\
+			
+			\cvskill{\textbf{Python}} {(Pandas, TensorFlow, PyTorch)} \\
+			
+			\cvskill{\textbf{Git, MySQL, Java, R, Solidity}} {} \\ 
+			
+			%\cvskill{\textbf{Hardware Description Language}} {VHDL, Verilog} \\ 
+			
+			%\cvskill{\textbf{Electronic Design Automation}} {(KiCAD; Altium Designer; OrCAD)} \\
+			
+			%\cvskill{\textbf{Computer-aided Design}} {(AutoCAD; Solid Edge; TIA portal)} \\
+			
+			%\cvqrcode{0.3}
+							
+		\end{rightcolumn}
+	\end{paracol}
+
+	\cvsection{RECENT PROJECTS}
+
+\parbox{\mpwidth}{
+	\begin{tabular*}{1\mpwidth}{p{1\mpwidth}  r}
+		\textcolor{black}{\textbf{Simple Pet Shop: An Ethereum Decentralized Application}} \\
+	\end{tabular*}\\[-8pt]
+	\cvlist{
+		\item{\cvtext{Used Solidity, Node.js, Web3.js, and Bootstrap to develop a full-stack decentralized shopping application.}}
+		\item{\cvtext{Implemented multiple advanced features and provided backend interfaces for several add-on features.}}
+		\item{\cvtext{The application achieved blockchain-wide real-time data display and response by on-chain event listening.}}
+	}
+}
+\vspace{14pt}
+
+\parbox{\mpwidth}{
+	\begin{tabular*}{1\mpwidth}{p{1\mpwidth}  r}
+		\textcolor{black}{\textbf{ctFS-FL: A Fine-grained Lock For Persistent Memory File System}} \\
+	\end{tabular*}\\[-8pt]
+	\cvlist{
+		\item{\cvtext{Designed a scalable byte-range synchronization mechanism for Persistent Memory file systems.}}
+		\item{\cvtext{Used C to develop a mechanism prototype, C++ and Python to build a benchmark set for prototype evaluation.}}
+		\item{\cvtext{The prototype efficiently exploited parallelism to speed up data access while ensuring fairness and low latency.}}
+	}
+}
+\vspace{14pt}
+
+\parbox{\mpwidth}{
+	\begin{tabular*}{1\mpwidth}{p{1\mpwidth}  r}
+		\textcolor{black}{\textbf{A Branch-and-Bound MAX-SAT Solver}} \\
+	\end{tabular*}\\[-8pt]
+	\cvlist{
+		\item{\cvtext{Used C++ to develop a maximum satisfiability problem (MAX-SAT) solving application.}}
+		\item{\cvtext{Implemented a depth-first Branch-and-Bound algorithm to solve the standard and weighted MAX-SAT.}}
+		\item{\cvtext{The application guaranteed to find optimal solutions rapidly by employing a multivariable bounding function.}}
+	}
+}
+\vspace{14pt}
+
+\parbox{\mpwidth}{
+	\begin{tabular*}{1\mpwidth}{p{1\mpwidth}  r}
+		\textcolor{black}{\textbf{A Flow-Based Spreading Analytical Placer}} \\
+	\end{tabular*}\\[-8pt]
+	\cvlist{
+		\item{\cvtext{Used C++ to develop an application to solve the placement problems on IC synthesis.}}
+		\item{\cvtext{Utilized convex function to model the problems and conjugate gradient method to obtain the solutions.}}
+		\item{\cvtext{The application deployed a flow-based algorithm analytically to optimize the solutions under constraints.}}
+	}
+}
+\vspace{14pt}
+
+\parbox{\mpwidth}{
+	\begin{tabular*}{1\mpwidth}{p{1\mpwidth}  r}
+		\textcolor{black}{\textbf{A Maze Router}} \\
+	\end{tabular*}\\[-8pt]
+	\cvlist{
+		\item{\cvtext{Used C++ to develop an FPGA maze routing application.}}
+		\item{\cvtext{Adopted Lee algorithm, modelled the problem as a directed graph and used BFS to find the optimal solutions.}}
+		\item{\cvtext{The application applied a simulated annealing algorithm to minimize delay and hardware cost of the solutions.}}
+	}
+}
+
+	
+\end{document}
